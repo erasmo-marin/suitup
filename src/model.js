@@ -1,0 +1,3 @@
+HADRON.Model = function() {
+    
+}

@@ -1,0 +1,178 @@
+html, body {
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #FCFDFD;
+}
+
+ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+li {
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+    color: #fff;
+}
+
+a:visited {
+    color: #fff;
+}
+
+.col-10 {
+    width: 10%;
+}
+
+.col-20 {
+    width: 20%;
+}
+
+.col-30 {
+    width: 30%;
+}
+
+.col-33 {
+    width: 33.3333%;
+}
+
+.col-40 {
+    width: 40%;
+}
+
+.col-50 {
+    width: 50%;
+}
+
+.col-60 {
+    width: 60%;
+}
+
+.col-66 {
+    width: 66.6666%;
+}
+
+.col-70 {
+    width: 70%;
+}
+
+.col-80 {
+    width: 80%;
+}
+
+.col-90 {
+    width: 90%;
+}
+
+.col-100 {
+    width: 100%;
+}
+
+.left {
+    float: left !important;
+}
+
+.right {
+    float: right !important;
+}
+
+
+header {
+    position: fixed;
+    width: 100%;
+    height: 70px;
+    top: 0;
+    left: 0;
+    background-color: #2E2E2E;
+    color: #fff;
+    box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+}
+
+footer {
+    position: fixed;
+    width: 100%;
+    height: 70px;
+    bottom: 0;
+    left: 0;
+    background-color: #2E2E2E;
+    color: #fff;
+    line-height: 70px;
+    text-align: center;
+}
+
+.main-content {
+    margin-top: 70px;
+    margin: 70px 60px 0 60px;
+}
+
+.main-content p {
+    padding-top: 10px;
+}
+
+.main-content a,  .main-content a:visited{
+    color: #64D084;
+}
+
+ul.menu {
+    margin-left: 50px;   
+}
+
+ul.menu li{
+    display: inline;
+    line-height: 70px;
+    margin: 0 10px 0 10px;
+}
+
+.logo {
+    height: 70px;
+    width: 300px;
+    background-image: url(img/logo-small.png);
+    background-position: center center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.button {
+    cursor: pointer;
+    padding: 5px 15px 5px 15px;
+    background-color: #FF7404;
+    border-radius: 3px;
+    border: 1px solid #dedede;
+    color: #fff;
+    text-transform: uppercase;
+    display: block;
+    margin-top: 30px;
+    text-align: center;
+}
+
+.friends-list {
+    display: block;
+    background-color: #F5F6F7;
+    border: 1px solid #E0E0E0;
+    padding: 20px;
+    margin-top: 30px;
+}
+
+.friends-container {
+    overflow: hidden;
+}
+
+.reactive-output {
+    border: 1px solid #dedede;
+    height: 300px;
+}
+
+textarea.reactive-input {
+    height: 300px;
+}

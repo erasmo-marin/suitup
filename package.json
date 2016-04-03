@@ -1,0 +1,34 @@
+{
+  "name": "suitup",
+  "version": "0.0.1",
+  "description": "Open Source Javascript framwork that allows you to create single web apps with less code",
+  "main": "src/suitup.js",
+  "directories": {
+    "doc": "docs",
+    "example": "example"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "mvc",
+    "framework",
+    "handlebars",
+    "jquery",
+    "angular",
+    "ember",
+    "react"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/erasmo-marin/suitupjs.git"
+  },
+  "author": "Erasmo Marín",
+  "license": "MIT",
+  "dependencies": {
+    "handlebars": "^4.0.5",
+    "jquery": "^1.12.2",
+    "location-bar": "^2.1.0",
+    "url-parse": "^1.1.1"
+  }
+}
