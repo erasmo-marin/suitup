@@ -1,6 +1,6 @@
 <img src="https://github.com/erasmo-marin/suitup/blob/master/example/img/logo-small.png" width="350">
 
-SuitUp.js is an Open Source Javascript framework that allows you to create single web apps with less code. SuitUp comes with jquery included, so you are free to use your jquery plugins without inconvenients or hacks.
+SuitUp.js is an Open Source Javascript framework that allows you to create single page web apps with less code. SuitUp comes with jquery included, so you are free to use your jquery plugins without inconvenients or hacks.
 
 SuitUp.js is in early development. **Don't use in production.**
 
