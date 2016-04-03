@@ -1,4 +1,4 @@
-![SuitUpJs](https://raw.githubusercontent.com/erasmo-marin/suitupjs/master/example/img/logo-small.png)
+<img src="https://github.com/erasmo-marin/suitup/blob/master/example/img/logo-small.png" width="350">
 
 SuitUp.js is an Open Source Javascript framework that allows you to create single web apps with less code. SuitUp comes with jquery included, so you are free to use your jquery plugins without inconvenients or hacks.
 
@@ -35,26 +35,38 @@ var friend = router.map ("/friend/:id", "friend", function(req, res) {
 ```
 
 ##Templates
-SuitUp uses handlebars. It's fast and easy. Call a template with the *component* helper. Load templates based on url with the *context* helper. Every route has a component with an asociated template. You can reuse your components saving time.
+SuitUp uses handlebars. It's fast and easy. Call a template with the *partial* helper. Create a component instance with the *component* helper. Load templates based on url with the *context* helper.
 
 application.handlebars
 ```html
-{{{component "header"}}}
+{{{component "HeaderComponent"}}}
 
 <section class="main-content">
     {{{context}}}
 </section>
 
-{{{component "footer"}}}
+{{{partial "footer"}}}
 ```
 
-friend.handlebars
-```html
-<p>Your friend id is {{model.id}}</p>
-{{{link "/" "back" "Home"}}}
+##Components
+Create components by extending from **SuitUp.Component** class. Instances of the component are created from any template you want.
+
+```js
+var HeaderComponent = function() {
+    SuitUp.Component.call(this, {
+        template: "header" //template name that this component is going to use
+    });
+    
+    //register an action callback
+    this.onAction("showMenu", function(element) {
+        $(".menu").show();
+    });
+};
+HeaderComponent.prototype = Object.create(SuitUp.Component.prototype);
+HeaderComponent.prototype.constructor = HeaderComponent;
 ```
 ##Running example
-Just execute the server file included in the example folder. Then open it in your browser [http://localhost:4200/](http://localhost:4200/)
+If not enough documentation here, check the example included. Just execute the server file included in the example folder. Then open it in your browser [http://localhost:4200/](http://localhost:4200/)
 ```sh
 $ cd example
 $ node server.js
@@ -68,10 +80,8 @@ Just include suitup-dist.js from dist folder and your compiled handlebars templa
 ```
 
 ##TODO
-- Reactive elements
 - Model Class
 - More helpers
-- Support for ember-like actions
 
 ##Contributing
 You are free to hack, modify or improve this code.
