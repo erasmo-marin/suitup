@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Suitup by erasmo-marin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Suitup</h1>
+      <h2 class="project-tagline">SuitUp is a javascript OpenSource framework that allows you to create sweet apps with less code</h2>
+      <a href="https://github.com/erasmo-marin/suitup" class="btn">View on GitHub</a>
+      <a href="https://github.com/erasmo-marin/suitup/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/erasmo-marin/suitup/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <p><img src="https://github.com/erasmo-marin/suitup/blob/master/example/img/logo-small.png" width="350"></p>
+
+<p>SuitUp.js is an Open Source Javascript framework that allows you to create single page web apps with less code. SuitUp comes with jquery included, so you are free to use your jquery plugins without inconvenients or hacks.</p>
+
+<p>SuitUp.js is in early development. <strong>Don't use in production.</strong></p>
+
+<h2>
+<a id="routing" class="anchor" href="#routing" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Routing</h2>
+
+<p>Creating routes is easy and clean in suitup. Just specify the route, template name and a callback function.</p>
+
+<p>app.js</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> router <span class="pl-k">=</span> <span class="pl-smi">SuitUp</span>.<span class="pl-smi">Router</span>;
+
+<span class="pl-k">var</span> index <span class="pl-k">=</span> <span class="pl-smi">router</span>.<span class="pl-en">map</span> (<span class="pl-s"><span class="pl-pds">"</span>/<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>index<span class="pl-pds">"</span></span>, <span class="pl-k">function</span>(<span class="pl-smi">req</span>, <span class="pl-smi">res</span>) {
+    <span class="pl-k">var</span> model <span class="pl-k">=</span> {
+        data<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>your data<span class="pl-pds">"</span></span>
+    };
+    <span class="pl-smi">res</span>.<span class="pl-en">render</span>(model);
+});
+
+<span class="pl-k">var</span> friends <span class="pl-k">=</span> <span class="pl-smi">router</span>.<span class="pl-en">map</span> (<span class="pl-s"><span class="pl-pds">"</span>/friends<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>friends<span class="pl-pds">"</span></span>, <span class="pl-k">function</span>(<span class="pl-smi">req</span>, <span class="pl-smi">res</span>) {
+    <span class="pl-k">var</span> model <span class="pl-k">=</span> {
+        friends<span class="pl-k">:</span> [<span class="pl-s"><span class="pl-pds">"</span>your<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>friends<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>list<span class="pl-pds">"</span></span>] 
+    };
+    <span class="pl-smi">res</span>.<span class="pl-en">render</span>(model);
+});
+
+<span class="pl-k">var</span> friend <span class="pl-k">=</span> <span class="pl-smi">router</span>.<span class="pl-en">map</span> (<span class="pl-s"><span class="pl-pds">"</span>/friend/:id<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>friend<span class="pl-pds">"</span></span>, <span class="pl-k">function</span>(<span class="pl-smi">req</span>, <span class="pl-smi">res</span>) {
+    <span class="pl-en">console</span>.<span class="pl-c1">log</span>(req);
+    <span class="pl-k">var</span> model <span class="pl-k">=</span> {
+        id<span class="pl-k">:</span> <span class="pl-smi">req</span>.<span class="pl-smi">query</span>.<span class="pl-c1">id</span>
+    };
+    <span class="pl-smi">res</span>.<span class="pl-en">render</span>(model);
+});</pre></div>
+
+<h2>
+<a id="templates" class="anchor" href="#templates" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Templates</h2>
+
+<p>SuitUp uses handlebars. It's fast and easy. Call a template with the <em>partial</em> helper. Create a component instance with the <em>component</em> helper. Load templates based on url with the <em>context</em> helper.</p>
+
+<p>application.handlebars</p>
+
+<div class="highlight highlight-text-html-basic"><pre>{{{component "HeaderComponent"}}}
+
+&lt;<span class="pl-ent">section</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>main-content<span class="pl-pds">"</span></span>&gt;
+    {{{context}}}
+&lt;/<span class="pl-ent">section</span>&gt;
+
+{{{partial "footer"}}}</pre></div>
+
+<h2>
+<a id="components" class="anchor" href="#components" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Components</h2>
+
+<p>Create components by extending from <strong>SuitUp.Component</strong> class. Instances of the component are created from any template you want.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> <span class="pl-en">HeaderComponent</span> <span class="pl-k">=</span> <span class="pl-k">function</span>() {
+    <span class="pl-smi">SuitUp</span>.<span class="pl-smi">Component</span>.<span class="pl-c1">call</span>(<span class="pl-v">this</span>, {
+        template<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>header<span class="pl-pds">"</span></span> <span class="pl-c">//template name that this component is going to use</span>
+    });
+
+    <span class="pl-c">//register an action callback</span>
+    <span class="pl-v">this</span>.<span class="pl-en">onAction</span>(<span class="pl-s"><span class="pl-pds">"</span>showMenu<span class="pl-pds">"</span></span>, <span class="pl-k">function</span>(<span class="pl-smi">element</span>) {
+        <span class="pl-en">$</span>(<span class="pl-s"><span class="pl-pds">"</span>.menu<span class="pl-pds">"</span></span>).<span class="pl-en">show</span>();
+    });
+};
+<span class="pl-smi">HeaderComponent</span>.<span class="pl-c1">prototype</span> <span class="pl-k">=</span> <span class="pl-c1">Object</span>.<span class="pl-en">create</span>(<span class="pl-smi">SuitUp</span>.<span class="pl-smi">Component</span>.<span class="pl-c1">prototype</span>);
+<span class="pl-smi">HeaderComponent</span>.<span class="pl-c1">prototype</span>.<span class="pl-c1">constructor</span> <span class="pl-k">=</span> HeaderComponent;</pre></div>
+
+<h2>
+<a id="running-example" class="anchor" href="#running-example" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Running example</h2>
+
+<p>If not enough documentation here, check the example included. Just execute the server file included in the example folder. Then open it in your browser <a href="http://localhost:4200/">http://localhost:4200/</a></p>
+
+<div class="highlight highlight-source-shell"><pre>$ <span class="pl-c1">cd</span> example
+$ node server.js</pre></div>
+
+<h2>
+<a id="including-it-in-your-html" class="anchor" href="#including-it-in-your-html" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Including it in your html</h2>
+
+<p>Just include suitup-dist.js from dist folder and your compiled handlebars templates.</p>
+
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">script</span> <span class="pl-e">src</span>=<span class="pl-s"><span class="pl-pds">"</span>templates.js<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">script</span>&gt;
+&lt;<span class="pl-ent">script</span> <span class="pl-e">src</span>=<span class="pl-s"><span class="pl-pds">"</span>suitup-dist.js<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">script</span>&gt;</pre></div>
+
+<h2>
+<a id="todo" class="anchor" href="#todo" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>TODO</h2>
+
+<ul>
+<li>Model Class</li>
+<li>More helpers</li>
+</ul>
+
+<h2>
+<a id="contributing" class="anchor" href="#contributing" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Contributing</h2>
+
+<p>You are free to hack, modify or improve this code.</p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/erasmo-marin/suitup">Suitup</a> is maintained by <a href="https://github.com/erasmo-marin">erasmo-marin</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
