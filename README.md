@@ -106,5 +106,3 @@ Just include suitup-dist.js from dist folder and your compiled handlebars templa
 
 ##Contributing
 You are free to hack, modify or improve this code.
-
-
