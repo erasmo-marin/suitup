@@ -84,8 +84,6 @@ var headerModel = index.headerComponent.getModel();
 var headerTitle = headerModel.get("title");
 //another example
 var link = headerModel.get("menu.links[2].href");
-
-
 ```
 
 ##Running example
