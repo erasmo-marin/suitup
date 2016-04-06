@@ -38,8 +38,10 @@ SuitUp.Component = function (params) {
     
     this.onAction = function (action, callback) {
         actions[action] = callback;
-        var actionHandler = $(document).on("click change", '*[data-suitup-action="'+ action +'"]', function () {
-            actions[$(this).data("suitup-action")](this);
+        //$(document).find('div[data-suitup-component="'+ id +'"] *[data-suitup-action="'+ action +'"]').off();
+        var actionHandler = $(document).on("click change", 'div[data-suitup-component="'+ id +'"] *[data-suitup-action="'+ action +'"]', function (event) {
+            console.log("Action called");
+            actions[$(this).data("suitup-action")](this, event);
         });
     }
     
@@ -57,6 +59,7 @@ SuitUp.Component = function (params) {
     
     this.setModel = function (m) {
         model = m;
+        model.setComponent(this);
     }
     
     this.getModel = function () {
@@ -65,7 +68,8 @@ SuitUp.Component = function (params) {
     
     this.render = function () {
         var ctx = {
-            model: model
+            model: model,
+            componentReference: this
         }
         html = Handlebars.templates[template](ctx);
         return html;

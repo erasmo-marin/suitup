@@ -1,6 +1,6 @@
-![SuitUpJs](https://raw.githubusercontent.com/erasmo-marin/suitupjs/master/example/img/logo-small.png)
+<img src="https://github.com/erasmo-marin/suitup/blob/master/example/img/logo-small.png" width="350">
 
-SuitUp.js is an Open Source Javascript framework that allows you to create single web apps with less code. SuitUp comes with jquery included, so you are free to use your jquery plugins without inconvenients or hacks.
+SuitUp.js is an Open Source Javascript framework that allows you to create single page web apps with less code. SuitUp comes with jquery included, so you are free to use your jquery plugins without inconvenients or hacks.
 
 SuitUp.js is in early development. **Don't use in production.**
 
@@ -35,26 +35,61 @@ var friend = router.map ("/friend/:id", "friend", function(req, res) {
 ```
 
 ##Templates
-SuitUp uses handlebars. It's fast and easy. Call a template with the *component* helper. Load templates based on url with the *context* helper. Every route has a component with an asociated template. You can reuse your components saving time.
+SuitUp uses handlebars. It's fast and easy. Call a template with the *partial* helper. Create a component instance with the *component* helper. Load templates based on url with the *context* helper.
 
 application.handlebars
 ```html
-{{{component "header"}}}
+{{{component "HeaderComponent"}}}
 
 <section class="main-content">
     {{{context}}}
 </section>
 
-{{{component "footer"}}}
+{{{partial "footer"}}}
 ```
 
-friend.handlebars
-```html
-<p>Your friend id is {{model.id}}</p>
-{{{link "/" "back" "Home"}}}
+##Components
+Create components by extending from **SuitUp.Component** class. Instances of the component are created from any template you want.
+
+```js
+var HeaderComponent = function() {
+    SuitUp.Component.call(this, {
+        template: "header" //template name that this component is going to use
+    });
+    
+    //register an action callback
+    this.onAction("showMenu", function(element) {
+        $(".menu").show();
+    });
+};
+HeaderComponent.prototype = Object.create(SuitUp.Component.prototype);
+HeaderComponent.prototype.constructor = HeaderComponent;
 ```
+
+##Components inside other components
+In SuitUp, components are encapsulated reducing coupling. You can define a component inside another component in your template and access to the component instance. For example, if you have 2 components, IndexComponent and HeaderComponent, you can define the IndexComponent template, **index.handlebars** like this:
+
+index.handlebars
+```html
+{{{component "HeaderComponent" "headerComponent"}}}
+
+<p>this is index</p>
+```
+
+Then, if you have an instance of your IndexComponent called index, you can access to your header data like this:
+
+```js
+var headerModel = index.headerComponent.getModel();
+//then
+var headerTitle = headerModel.get("title");
+//another example
+var link = headerModel.get("menu.links[2].href");
+
+
+```
+
 ##Running example
-Just execute the server file included in the example folder. Then open it in your browser [http://localhost:4200/](http://localhost:4200/)
+If not enough documentation here, check the example included. Just execute the server file included in the example folder. Then open it in your browser [http://localhost:4200/](http://localhost:4200/)
 ```sh
 $ cd example
 $ node server.js
@@ -68,11 +103,8 @@ Just include suitup-dist.js from dist folder and your compiled handlebars templa
 ```
 
 ##TODO
-- Reactive elements
 - Model Class
 - More helpers
-- Support for ember-like actions
 
 ##Contributing
 You are free to hack, modify or improve this code.
-

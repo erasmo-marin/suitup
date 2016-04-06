@@ -4,7 +4,7 @@ var SuitUp = require("./suitup.js");
 //context: carga el template de acuerdo a la url
 
 SuitUp.Helpers = new function () {
-    Handlebars.registerHelper('context', function () {
+    /*Handlebars.registerHelper('context', function () {
         var route = SuitUp.Router.getCurrentRoute();
         console.log(this);
         var ctx = {
@@ -12,7 +12,7 @@ SuitUp.Helpers = new function () {
         };
         var opt = {};
         return Handlebars.templates[route.getComponent()](ctx, opt);
-    });
+    });*/
     
     
     Handlebars.registerHelper('partial', function(template, m) {
@@ -30,9 +30,13 @@ SuitUp.Helpers = new function () {
     });
 
     //carga el componente requerido en el contexto actual
-    Handlebars.registerHelper('component', function(componentClass, model) {
+    Handlebars.registerHelper('component', function(componentClass, model, varName) {
         
         var component = SuitUp.ComponentRegistry.createComponentByName(componentClass);
+        if (this.componentReference && varName) {
+            console.log("existe componentReference");
+            this.componentReference[varName] = component;
+        }
         
         if (model) {
             component.setModel(model);
@@ -55,11 +59,6 @@ SuitUp.Helpers = new function () {
      //carga el componente requerido en el contexto actual
     Handlebars.registerHelper('action', function(actionName) {
         var data = ' data-suitup-action="' + actionName + '" ';
-        if (this.model.component) {
-            var data = data + 'data-suitup-component="'+ this.model.component.getId() +'"';
-        } else if (this.component) {
-            var data = data + 'data-suitup-component="'+ this.component.getId() +'"';
-        }
         return data;
     });
     

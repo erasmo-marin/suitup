@@ -19735,8 +19735,6 @@ SuitUp.ComponentRegistry = new function () {
 
 
 SuitUp.Component = function (params) {
-    console.log("PARAMS")
-    console.log(params);
     var template = null || params.template;
     var id = SuitUp.ComponentRegistry.registerComponent(this);
     var self = this;
@@ -19746,8 +19744,10 @@ SuitUp.Component = function (params) {
     
     this.onAction = function (action, callback) {
         actions[action] = callback;
-        var actionHandler = $(document).on("click change", '*[data-suitup-action="'+ action +'"]', function () {
-            actions[$(this).data("suitup-action")](this);
+        //$(document).find('div[data-suitup-component="'+ id +'"] *[data-suitup-action="'+ action +'"]').off();
+        var actionHandler = $(document).on("click change", 'div[data-suitup-component="'+ id +'"] *[data-suitup-action="'+ action +'"]', function (event) {
+            console.log("Action called");
+            actions[$(this).data("suitup-action")](this, event);
         });
     }
     
@@ -19773,7 +19773,8 @@ SuitUp.Component = function (params) {
     
     this.render = function () {
         var ctx = {
-            model: model
+            model: model,
+            componentReference: this
         }
         html = Handlebars.templates[template](ctx);
         return html;
@@ -19789,7 +19790,7 @@ var SuitUp = require("./suitup.js");
 //context: carga el template de acuerdo a la url
 
 SuitUp.Helpers = new function () {
-    Handlebars.registerHelper('context', function () {
+    /*Handlebars.registerHelper('context', function () {
         var route = SuitUp.Router.getCurrentRoute();
         console.log(this);
         var ctx = {
@@ -19797,7 +19798,7 @@ SuitUp.Helpers = new function () {
         };
         var opt = {};
         return Handlebars.templates[route.getComponent()](ctx, opt);
-    });
+    });*/
     
     
     Handlebars.registerHelper('partial', function(template, m) {
@@ -19815,9 +19816,13 @@ SuitUp.Helpers = new function () {
     });
 
     //carga el componente requerido en el contexto actual
-    Handlebars.registerHelper('component', function(componentClass, model) {
+    Handlebars.registerHelper('component', function(componentClass, model, varName) {
         
         var component = SuitUp.ComponentRegistry.createComponentByName(componentClass);
+        if (this.componentReference && varName) {
+            console.log("existe componentReference");
+            this.componentReference[varName] = component;
+        }
         
         if (model) {
             component.setModel(model);
@@ -19840,11 +19845,6 @@ SuitUp.Helpers = new function () {
      //carga el componente requerido en el contexto actual
     Handlebars.registerHelper('action', function(actionName) {
         var data = ' data-suitup-action="' + actionName + '" ';
-        if (this.model.component) {
-            var data = data + 'data-suitup-component="'+ this.model.component.getId() +'"';
-        } else if (this.component) {
-            var data = data + 'data-suitup-component="'+ this.component.getId() +'"';
-        }
         return data;
     });
     
@@ -19937,16 +19937,20 @@ module.exports = SuitUp;
 },{"./suitup.js":56}],53:[function(require,module,exports){
 var SuitUp = require("./suitup.js");
 
-SuitUp.RouteResponse = function (componentName) {
-    var componentName = componentName;
+SuitUp.RouteResponse = function (componentClass) {
+    var componentClass = componentClass;
     
     this.render = function(model) {
         console.log(model);
-        var ctx = {
-            model: model
+        var component = SuitUp.ComponentRegistry.createComponentByName(componentClass);
+        component.setModel(model);
+        var componentHtml = '<div class="suitup-component" data-suitup-component="'+ component.getId() +'">' + component.render() + '</div>';
+        
+        var ctx2 = {
+            context: componentHtml
         };
-        var opt = {};
-        var html = Handlebars.templates.application(ctx, opt);
+        
+        var html = Handlebars.templates.application(ctx2);
         $("body").empty();
         $("body").append(html);
     }

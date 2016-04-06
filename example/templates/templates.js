@@ -61,7 +61,7 @@ templates['index'] = template({"compiler":[7,">= 4.0.0"],"main":function(contain
     var stack1;
 
   return "<p>Context Index</p>\n\n"
-    + ((stack1 = (helpers.component || (depth0 && depth0.component) || helpers.helperMissing).call(depth0 != null ? depth0 : {},"FriendsComponent",{"name":"component","hash":{},"data":data})) != null ? stack1 : "");
+    + ((stack1 = (helpers.component || (depth0 && depth0.component) || helpers.helperMissing).call(depth0 != null ? depth0 : {},"FriendsComponent","friendsComponent",{"name":"component","hash":{},"data":data})) != null ? stack1 : "");
 },"useData":true});
 templates['users'] = template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     return "<p>Context Users</p>";

@@ -1,7 +1,7 @@
 {
   "name": "suitup",
-  "version": "0.0.1",
-  "description": "Open Source Javascript framwork that allows you to create single web apps with less code",
+  "version": "0.0.2",
+  "description": "SuitUp is a javascript OpenSource MVC framework that allows you to create sweet apps with less code that makes sense",
   "main": "src/suitup.js",
   "directories": {
     "doc": "docs",
@@ -12,6 +12,8 @@
   },
   "keywords": [
     "mvc",
+    "frontend",
+    "front-end",
     "framework",
     "handlebars",
     "jquery",
@@ -21,7 +23,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/erasmo-marin/suitupjs.git"
+    "url": "git+https://github.com/erasmo-marin/suitup.git"
   },
   "author": "Erasmo Marín",
   "license": "MIT",

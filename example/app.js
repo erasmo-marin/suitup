@@ -10,22 +10,47 @@ var FriendsComponent = function() {
     
     //define actions inside your component class
     this.onAction("listFriends", function(element) {
-        $(".friends-list").toggle();
-    });
-    
+        $(document).find(".friends-list").toggle();
+    }); 
 };
 FriendsComponent.prototype = Object.create(SuitUp.Component.prototype);
 FriendsComponent.prototype.constructor = FriendsComponent;
+
+var FriendComponent = function() {
+    SuitUp.Component.call(this, {
+        template: "friend" //template name that this component is going to use
+    });
+};
+FriendComponent.prototype = Object.create(SuitUp.Component.prototype);
+FriendComponent.prototype.constructor = FriendComponent;
 
 //Header component
 var HeaderComponent = function() {
     SuitUp.Component.call(this, {
         template: "header" //template name that this component is going to use
-    });  
+    });
 };
 HeaderComponent.prototype = Object.create(SuitUp.Component.prototype);
 HeaderComponent.prototype.constructor = HeaderComponent;
 
+
+//Users component
+var UsersComponent = function() {
+    SuitUp.Component.call(this, {
+        template: "users" //template name that this component is going to use
+    });
+};
+UsersComponent.prototype = Object.create(SuitUp.Component.prototype);
+UsersComponent.prototype.constructor = UsersComponent;
+
+//Index component
+var IndexComponent = function() {
+    SuitUp.Component.call(this, {
+        template: "index" //template name that this component is going to use
+    });
+};
+IndexComponent.prototype = Object.create(SuitUp.Component.prototype);
+IndexComponent.prototype.constructor = IndexComponent;
 
 
 //define filters for the reactive and filter helper
@@ -34,24 +59,24 @@ SuitUp.DataFilter.extend("inverseText", function (text) {
 });
 
 
-//Routing consist in defining a path, a template name and a callback
+//Routing consist in defining a path, a component name and a callback
 //req: Allows you to read parameters from url. Use req.query.parameter
 //res: Allows you to render your html based on a model
-var index = router.map ("/", "index", function(req, res) {
+var index = router.map ("/", "IndexComponent", function(req, res) {
     var model = {
         request: req.param
     };
     res.render(model);
 });
 
-var users = router.map ("/users", "users", function(req, res) {
+var users = router.map ("/users", "UsersComponent", function(req, res) {
     var model = {
         request: req.param
     };
     res.render(model);
 });
 
-var friends = router.map ("/friends", "friends", function(req, res) {
+var friends = router.map ("/friends", "FriendsComponent", function(req, res) {
     
     //if "friends" template uses actions, you must specify a component,
     //else, SuitUp will search in component registry to use a component
@@ -62,7 +87,7 @@ var friends = router.map ("/friends", "friends", function(req, res) {
     res.render(model);
 });
 
-var friend = router.map ("/friend/:id", "friend", function(req, res) {
+var friend = router.map ("/friend/:id", "FriendComponent", function(req, res) {
     console.log(req);
     var model = {
         id: req.query.id
