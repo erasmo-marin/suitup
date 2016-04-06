@@ -65,6 +65,27 @@ var HeaderComponent = function() {
 HeaderComponent.prototype = Object.create(SuitUp.Component.prototype);
 HeaderComponent.prototype.constructor = HeaderComponent;
 ```
+
+##Components inside other components
+In SuitUp, components are encapsulated reducing coupling. You can define a component inside another component in your template and access to the component instance. For example, if you have 2 components, IndexComponent and HeaderComponent, you can define the IndexComponent template, **index.handlebars** like this:
+
+index.handlebars
+```html
+{{{component "HeaderComponent" "headerComponent"}}}
+
+<p>this is index</p>
+```
+
+Then, if you have an instance of your IndexComponent called index, you can access to your header data like this:
+
+```js
+var headerModel = index.headerComponent.getModel();
+//then
+var headerTitle = headerModel.get("title");
+//another example
+var link = headerModel.get("menu.links[2].href");
+```
+
 ##Running example
 If not enough documentation here, check the example included. Just execute the server file included in the example folder. Then open it in your browser [http://localhost:4200/](http://localhost:4200/)
 ```sh
@@ -85,4 +106,5 @@ Just include suitup-dist.js from dist folder and your compiled handlebars templa
 
 ##Contributing
 You are free to hack, modify or improve this code.
+
 
