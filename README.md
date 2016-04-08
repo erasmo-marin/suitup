@@ -1,36 +1,49 @@
 <img src="https://github.com/erasmo-marin/suitup/blob/master/example/img/logo-small.png" width="350">
 
-SuitUp.js is an Open Source Javascript framework that allows you to create single page web apps with less code. SuitUp comes with jquery included, so you are free to use your jquery plugins without inconvenients or hacks.
+SuitUp.js is an Open Source Javascript framework that allows you to create single page web apps with less code. SuitUp comes with jquery included, so you are free to use your jquery plugins without inconvenients or hacks. Also, any change in your model instances will result in DOM update.
 
 SuitUp.js is in early development. **Don't use in production.**
 
+##Components
+Create components by extending from **SuitUp.Component** *Class*. Instances of the component are created from any template you want.
+
+```js
+var HeaderComponent = function() {
+    SuitUp.Component.call(this, {
+        template: "header" //handlebars template name that this component is going to use
+    });
+};
+HeaderComponent.prototype = Object.create(SuitUp.Component.prototype);
+HeaderComponent.prototype.constructor = HeaderComponent;
+```
+
 ##Routing
-Creating routes is easy and clean in suitup. Just specify the route, template name and a callback function.
+Creating routes is easy and clean in suitup. Just specify the route, component name and a callback function.
 
 app.js
 ```js
 var router = SuitUp.Router;
 
-var index = router.map ("/", "index", function(req, res) {
-    var model = {
+var index = router.map ("/", "IndexComponent", function(req, res) {
+    var data = {
         data: "your data"
     };
-    res.render(model);
+    res.render(data);
 });
 
-var friends = router.map ("/friends", "friends", function(req, res) {
-    var model = {
+var friends = router.map ("/friends", "FriendsComponent", function(req, res) {
+    var data = {
         friends: ["your","friends","list"] 
     };
-    res.render(model);
+    res.render(data);
 });
 
-var friend = router.map ("/friend/:id", "friend", function(req, res) {
+var friend = router.map ("/friend/:id", "FriendComponent", function(req, res) {
     console.log(req);
-    var model = {
+    var data = {
         id: req.query.id
     };
-    res.render(model);
+    res.render(data);
 });
 ```
 
@@ -48,24 +61,6 @@ application.handlebars
 {{{partial "footer"}}}
 ```
 
-##Components
-Create components by extending from **SuitUp.Component** class. Instances of the component are created from any template you want.
-
-```js
-var HeaderComponent = function() {
-    SuitUp.Component.call(this, {
-        template: "header" //template name that this component is going to use
-    });
-    
-    //register an action callback
-    this.onAction("showMenu", function(element) {
-        $(".menu").show();
-    });
-};
-HeaderComponent.prototype = Object.create(SuitUp.Component.prototype);
-HeaderComponent.prototype.constructor = HeaderComponent;
-```
-
 ##Components inside other components
 In SuitUp, components are encapsulated reducing coupling. You can define a component inside another component in your template and access to the component instance. For example, if you have 2 components, IndexComponent and HeaderComponent, you can define the IndexComponent template, **index.handlebars** like this:
 
@@ -79,6 +74,7 @@ index.handlebars
 Then, if you have an instance of your IndexComponent called index, you can access to your header data like this:
 
 ```js
+//first
 var headerModel = index.headerComponent.getModel();
 //then
 var headerTitle = headerModel.get("title");
@@ -94,10 +90,10 @@ $ node server.js
 ```
 
 ##Including it in your html
-Just include suitup-dist.js from dist folder and your compiled handlebars templates.
+Just include suitup.min.js from dist folder and your compiled handlebars templates.
 ```html
 <script src="templates.js"></script>
-<script src="suitup-dist.js"></script>
+<script src="suitup.min.js"></script>
 ```
 
 ##TODO

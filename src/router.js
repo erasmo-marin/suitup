@@ -62,20 +62,21 @@ SuitUp.Router = new function() {
         return currentRoute;
     }
     
-    //cargamos index
+    //load application.handlebars template
     $(document).ready(function() {
         var url = new URL(window.location.href );
         console.log(url);
         onUrlRequest(url.pathname);
         
-        $(document).on("click", ".suitup-link", function(e){
+        $(document).on("click", "a.suitup-link", function(e){
+            e.stopImmediatePropagation();
+            e.preventDefault();
             var url = $(this).attr("href");
             url = new URL(url);
             console.log(url);
             onUrlRequest(url.pathname);
             document.title = $(this).data("suitup-link-title");
-            e.preventDefault();
-            e.stopPropagation();
+            return false;
         });
 
         locationBar.start({

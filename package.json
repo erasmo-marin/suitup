@@ -31,6 +31,9 @@
     "handlebars": "^4.0.5",
     "jquery": "^1.12.2",
     "location-bar": "^2.1.0",
-    "url-parse": "^1.1.1"
+    "uglifyify": "^3.0.1",
+    "url-parse": "^1.1.1",
+    "vdom-virtualize": "^1.0.6",
+    "virtual-dom": "2.1.1"
   }
 }

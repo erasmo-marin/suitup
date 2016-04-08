@@ -1,3 +1,5 @@
+var SuitUp = require("./suitup.js");
+
 SuitUp.Model = function (dataModelDefault) {
     var _dataModel = {} || dataModelDefault;
     var _component = {};
@@ -18,6 +20,10 @@ SuitUp.Model = function (dataModelDefault) {
             st + ".";
         }
         return eval(st + varExp);
+    }
+    
+    this.getData = function () {
+        return _dataModel;
     }
     
     this.set = function (varExp, val) {

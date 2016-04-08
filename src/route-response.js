@@ -13,9 +13,17 @@ SuitUp.RouteResponse = function (componentClass) {
             context: componentHtml
         };
         
+        //render entire new html
+        //Components are not re-rendered if model has not changed thanks to component helper
         var html = Handlebars.templates.application(ctx2);
-        $("body").empty();
-        $("body").append(html);
+        
+        if (SuitUp.virtualDom == null) {
+            SuitUp.virtualDom = new SuitUp.VirtualDom(html);
+            return;
+        }
+        
+        SuitUp.virtualDom.render(html);
+        
     }
 }
 

@@ -33,7 +33,7 @@ SuitUp.Component = function (params) {
     var id = SuitUp.ComponentRegistry.registerComponent(this);
     var self = this;
     var actions = {};
-    var model = {} || params.model;
+    var model = {} || new SuitUp.Model(params.model);
     var html = "";
     
     this.onAction = function (action, callback) {
@@ -58,8 +58,7 @@ SuitUp.Component = function (params) {
     }
     
     this.setModel = function (m) {
-        model = m;
-        model.setComponent(this);
+        model = new SuitUp.Model(m);
     }
     
     this.getModel = function () {
@@ -68,7 +67,7 @@ SuitUp.Component = function (params) {
     
     this.render = function () {
         var ctx = {
-            model: model,
+            model: model.getData(),
             componentReference: this
         }
         html = Handlebars.templates[template](ctx);
