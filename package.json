@@ -1,6 +1,6 @@
 {
   "name": "suitup",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "SuitUp is a javascript OpenSource MVC framework that allows you to create sweet apps with less code that makes sense",
   "main": "src/suitup.js",
   "directories": {

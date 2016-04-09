@@ -7,6 +7,7 @@ var SuitUp = require("./suitup.js");
 
 SuitUp.VirtualDom = function(initialHtmlString) {
     
+    var html = initialHtmlString;
     var tree = vdom.fromHTML(initialHtmlString);
     var rootNode = createElement(tree);
     document.body.appendChild(rootNode);
@@ -17,8 +18,64 @@ SuitUp.VirtualDom = function(initialHtmlString) {
         var patches = diff(tree, tree2);
         rootNode = patch(rootNode, patches);
         tree = tree2;
-        console.log("done");
-    }  
+        html = newHtml;
+    }
+    
+    //utilidades para acceder a la funcionalidad de la clase desde afuera
+    var getTreeForHtml = function (html) {
+        return vdom.fromHTML(html);
+    }
+    
+    var getDomTree = function () {
+        return tree;
+    }
+    
+    var getDomTreeCopy = function () {
+        return getTreeForHtml(html);
+    }
+    
+    var getHtmlForRootNode = function () {
+        var target = rootNode;
+        var wrap = document.createElement('div');
+        wrap.appendChild(target.cloneNode(true));
+        return wrap.innerHTML;
+    }
+    
+    //receive html from updated component and patch with changes
+    this.updateComponent = function (html2) {
+        var node = getTreeForHtml(html2);
+        node = node.children[1].children[0];
+        var componentId = node.properties.attributes["data-suitup-component"];
+        var patchTree = getDomTreeCopy();
+        patchComponent(patchTree, node, function () {
+            var patchNode = createElement(patchTree);
+            var patches = diff(tree, patchTree);
+            rootNode = patch(rootNode, patches);
+            tree = patchTree;
+            html = getHtmlForRootNode();           
+        });
+    }
+        
+    //find and replace updated node from virtual tree
+    var patchComponent = function (parent, componentNode, callback) {
+        if(!parent.children || parent.children.length == 0)
+            return;
+        
+        for(var i = 0; i<parent.children.length; i++) {
+            //podemos saltarnos el primer nivel ya que los componentes nunca están en ese nivel
+            //además necesitamos la referencia al padre para poder cambiarlo
+            if (parent.children[i].properties != null && 
+                parent.children[i].properties.attributes != null && 
+                parent.children[i].properties.attributes["data-suitup-component"] != null && 
+                parent.children[i].properties.attributes["data-suitup-component"] == componentNode.properties.attributes["data-suitup-component"]) {
+                parent.children[i] = componentNode;
+                callback();
+                return;
+            }
+            patchComponent(parent.children[i], componentNode, callback);
+        }
+        return;
+    }
 }
 
 module.exports = SuitUp;

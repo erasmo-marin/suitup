@@ -59,19 +59,39 @@ SuitUp.DataFilter.extend("inverseText", function (text) {
 });
 
 
+var links = [
+     {
+         href: "/",
+         text: "home",
+         title: "SuitUp"
+     },
+     {
+         href: "/users",
+         text: "Users",
+         title: "SuitUp - users"
+     },
+     {
+         href: "/friends",
+         text: "Friends",
+         title: "SuitUp - friends"
+     },
+]
+
 //Routing consist in defining a path, a component name and a callback
 //req: Allows you to read parameters from url. Use req.query.parameter
 //res: Allows you to render your html based on a model
 var index = router.map ("/", "IndexComponent", function(req, res) {
     var model = {
-        request: req.param
+        request: req.param,
+        links: links
     };
     res.render(model);
 });
 
 var users = router.map ("/users", "UsersComponent", function(req, res) {
     var model = {
-        request: req.param
+        request: req.param,
+        links: links
     };
     res.render(model);
 });
@@ -83,6 +103,7 @@ var friends = router.map ("/friends", "FriendsComponent", function(req, res) {
     
     var model = {
         request: req.param,
+        links: links
     };
     res.render(model);
 });
@@ -90,7 +111,8 @@ var friends = router.map ("/friends", "FriendsComponent", function(req, res) {
 var friend = router.map ("/friend/:id", "FriendComponent", function(req, res) {
     console.log(req);
     var model = {
-        id: req.query.id
+        id: req.query.id,
+        links: links
     };
     res.render(model);
 });

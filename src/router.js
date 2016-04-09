@@ -61,7 +61,7 @@ SuitUp.Router = new function() {
     this.getCurrentRoute = function () {
         return currentRoute;
     }
-    
+        
     //load application.handlebars template
     $(document).ready(function() {
         var url = new URL(window.location.href );

@@ -29,11 +29,18 @@ SuitUp.ComponentRegistry = new function () {
 
 
 SuitUp.Component = function (params) {
-    var template = null || params.template;
+    var template = params.template;
     var id = SuitUp.ComponentRegistry.registerComponent(this);
     var self = this;
     var actions = {};
-    var model = {} || new SuitUp.Model(params.model);
+    var model = {};
+    var firstRender = true;
+    
+    if (params.model) {
+        model = new SuitUp.Model(params.model);
+        model.setComponent(this);
+        model.onChange(onModelChange);
+    }
     var html = "";
     
     this.onAction = function (action, callback) {
@@ -43,6 +50,17 @@ SuitUp.Component = function (params) {
             console.log("Action called");
             actions[$(this).data("suitup-action")](this, event);
         });
+    }
+    
+    this.render = function () {
+        var ctx = {
+            model: model.getModelData(),
+            componentReference: this
+        }
+        html = Handlebars.templates[template](ctx);
+        html = '<div class="suitup-component" data-suitup-component="'+ this.getId() +'">' + html + '</div>';
+        firstRender = false;
+        return html;
     }
     
     this.getId = function () {
@@ -59,19 +77,21 @@ SuitUp.Component = function (params) {
     
     this.setModel = function (m) {
         model = new SuitUp.Model(m);
+        model.setComponent(this);
+        model.onChange(onModelChange);
     }
     
     this.getModel = function () {
         return model;
     }
     
-    this.render = function () {
-        var ctx = {
-            model: model.getData(),
-            componentReference: this
-        }
-        html = Handlebars.templates[template](ctx);
-        return html;
+    this.getData = function () {
+        return model.getModelData();
+    }
+    
+    var onModelChange = function () {
+        self.render();
+        SuitUp.virtualDom.updateComponent(html);
     }
     
 }

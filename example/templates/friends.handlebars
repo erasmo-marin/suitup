@@ -15,12 +15,12 @@
 
 <div class="friends-container">
     <p>Inputs, buttons or divs respond to changes using the reactive helper. Try to write some html in this html editor.</p>
-    <textarea class="reactive-input col-40 left" {{{reactive "text"}}}><div style="color: red">Hi</div></textarea>
-    <div class="reactive-output col-40 right" {{{reactive "text"}}}><div style="color: red">Hi</div></div>
+    <textarea class="reactive-input col-40 left" {{{modelVar "text"}}}>{{{model.text}}}</textarea>
+    <div class="reactive-output col-40 right">{{{model.text}}}</div>
 </div>
 
 <div class="friends-container">
     <p>Apply filters to your data. Just specify a filter in reactive helper.</p>
-    <textarea class="reactive-input col-40 left" {{{reactive "text2"}}}></textarea>
-    <div class="reactive-output col-40 right" {{{reactive "text2" "inverseText"}}}></div>
+    <textarea class="reactive-input col-40 left" {{{modelVar "text2"}}}>{{{model.text2}}}</textarea>
+    <div class="reactive-output col-40 right">{{{model.text2}}}</div>
 </div>

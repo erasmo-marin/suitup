@@ -34,19 +34,15 @@ SuitUp.Helpers = new function () {
         
         var component = SuitUp.ComponentRegistry.createComponentByName(componentClass);
         if (this.componentReference && varName) {
-            console.log("existe componentReference");
             this.componentReference[varName] = component;
         }
         
         if (model) {
             component.setModel(model);
         } else {
-            component.setModel(this.model);
+            component.setModel({});
         }
-        
-        var html = '<div class="suitup-component" data-suitup-component="'+ component.getId() +'">' + component.render() + '</div>';
-        
-        return html;
+        return component.render();
     });
     
     //carga el componente requerido en el contexto actual
@@ -56,11 +52,45 @@ SuitUp.Helpers = new function () {
         return '<a class="suitup-link" href="'+ url +'"  data-suitup-link-title="'+ title +'">' + text + '</a>';
     });
     
-     //carga el componente requerido en el contexto actual
     Handlebars.registerHelper('action', function(actionName) {
         var data = ' data-suitup-action="' + actionName + '" ';
         return data;
     });
+    
+    
+    //helper that links a 
+    Handlebars.registerHelper('modelVar', function(varName) {
+        var data = ' data-suitup-model-var="' + varName + '" ';
+        return data;
+    });
+    
+    //TODO: Mejorar este script
+    var modelVarHandler = $(document).on("keyup change", '*[data-suitup-model-var]', function () {
+        //buscamos el componente padre
+        var varName = $(this).data("suitup-model-var");
+        var val = null;
+        if($(this).is("textarea, input")) {
+            val = $(this).val();
+        } else {
+            val = $(this).html();
+        }
+        
+        var element = $(this);
+        do {
+            element = element.parent();
+            if(element == null || element.length == 0)
+                return;
+            var componentId = parseInt(element.data("suitup-component"));
+            if(!isNaN(componentId)) {
+                var component = SuitUp.ComponentRegistry.getComponentById(componentId);
+                var model = component.getModel();
+                model.set(varName, val);
+                return;
+            }
+            
+        } while (element);   
+    });
+    
     
     /**Reactive elements implementation**/
     SuitUp.DataFilter = new function () {
@@ -68,7 +98,6 @@ SuitUp.Helpers = new function () {
             this[filterName] = filter;
         }
     }
-    
     
      //carga el componente requerido en el contexto actual
     Handlebars.registerHelper('reactive', function(varName, filter) {
