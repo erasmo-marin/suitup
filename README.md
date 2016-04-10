@@ -73,9 +73,9 @@ component.handlebars
 ##Components inside other components
 In SuitUp, components are encapsulated reducing coupling. You can define a component inside another component in your template and access to the component instance. For example, if you have 2 components, IndexComponent and HeaderComponent, you can define the IndexComponent template, **index.handlebars** like this: 
 
-*first argument*: The Component Class.
-*second argument*: The Model to use.
-*third argument*: A property name to access the child Component from parent component.
++ **first argument**: The Component Class.
++ **second argument**: The Model to use.
++ **third argument**: A property name to access the child Component from parent component.
 
 index.handlebars
 ```html
@@ -116,5 +116,5 @@ Just include suitup.min.js from dist folder and your compiled handlebars templat
 You are free to hack, modify or improve this code.
 
 ##Thanks
-[virtual-dom](https://github.com/Matt-Esch/virtual-dom) - A Virtual DOM and diffing algorithm
-[handlebars](https://github.com/wycats/handlebars.js) - Logicless templating language
++ [virtual-dom](https://github.com/Matt-Esch/virtual-dom) - A Virtual DOM and diffing algorithm
++ [handlebars](https://github.com/wycats/handlebars.js) - Logicless templating language
