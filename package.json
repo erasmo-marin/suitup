@@ -28,6 +28,8 @@
   "author": "Erasmo Marín",
   "license": "MIT",
   "dependencies": {
+    "copy-object": "^1.0.0",
+    "deep-copy": "^1.1.0",
     "handlebars": "^4.0.5",
     "jquery": "^1.12.2",
     "location-bar": "^2.1.0",

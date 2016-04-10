@@ -98,15 +98,6 @@ SuitUp.Helpers = new function () {
             this[filterName] = filter;
         }
     }
-    
-     //carga el componente requerido en el contexto actual
-    Handlebars.registerHelper('reactive', function(varName, filter) {
-        var data = ' data-suitup-reactive="' + varName + '" ';
-        if(filter) {
-            data = data + ' data-suitup-filter="' + filter + '" ';
-        }
-        return data;
-    });  
 
     var actionHandler = $(document).on("keyup change", '*[data-suitup-reactive]', function () {
         var self = this;
@@ -135,6 +126,10 @@ SuitUp.Helpers = new function () {
         });
         
             
+    });
+    
+    Handlebars.registerHelper( 'concat', function(str1, str2) {
+        return str1 + str2;
     });
     
 }

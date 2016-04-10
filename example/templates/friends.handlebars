@@ -4,23 +4,15 @@
     <div class="button col-30" {{{action "listFriends"}}}>Toggle friends</div>
     <div class="friends-list" style="display:none">
         <ul>
-            <li>{{{link "/friend/1" "Amaro Gomez" "Friend 1"}}}</li>
-            <li>{{{link "/friend/2" "Nick Campbell" "Friend 2"}}}</li>
-            <li>{{{link "/friend/3" "Jhonn Segura" "Friend 3"}}}</li>
-            <li>{{{link "/friend/4" "Brad Pit" "Friend 4"}}}</li>
-            <li>{{{link "/friend/5" "Angelina Jolie" "Friend 5"}}}</li>
+            {{#each model.friends}}
+                <li>{{{link (concat "/friend/" this.id) this.name this.name}}}</li>
+            {{/each}}
         </ul>
     </div>
 </div>
 
 <div class="friends-container">
     <p>Inputs, buttons or divs respond to changes using the reactive helper. Try to write some html in this html editor.</p>
-    <textarea class="reactive-input col-40 left" {{{modelVar "text"}}}>{{{model.text}}}</textarea>
-    <div class="reactive-output col-40 right">{{{model.text}}}</div>
-</div>
-
-<div class="friends-container">
-    <p>Apply filters to your data. Just specify a filter in reactive helper.</p>
-    <textarea class="reactive-input col-40 left" {{{modelVar "text2"}}}>{{{model.text2}}}</textarea>
-    <div class="reactive-output col-40 right">{{{model.text2}}}</div>
+    <textarea class="reactive-input col-40 left" {{{modelVar "text"}}} value="{{model.text}}"></textarea>
+    <div class="reactive-output col-40 right">{{model.text}}</div>
 </div>

@@ -75,12 +75,30 @@ var links = [
          text: "Friends",
          title: "SuitUp - friends"
      },
-]
+];
+
+var friends = [
+    {
+        name: "Amaro Gomez",
+        id: 8783
+    },{
+        name: "Nick Campbell",
+        id: 8723
+    },{
+        name: "Jhon Porter",
+        id: 9892
+    },{
+        name: "Brad Pit",
+        id: 9893
+    },{    
+        name: "Angelina Jolie",
+        id: 1783
+    }];
 
 //Routing consist in defining a path, a component name and a callback
 //req: Allows you to read parameters from url. Use req.query.parameter
 //res: Allows you to render your html based on a model
-var index = router.map ("/", "IndexComponent", function(req, res) {
+router.map ("/", "IndexComponent", function(req, res) {
     var model = {
         request: req.param,
         links: links
@@ -88,7 +106,7 @@ var index = router.map ("/", "IndexComponent", function(req, res) {
     res.render(model);
 });
 
-var users = router.map ("/users", "UsersComponent", function(req, res) {
+router.map ("/users", "UsersComponent", function(req, res) {
     var model = {
         request: req.param,
         links: links
@@ -96,14 +114,15 @@ var users = router.map ("/users", "UsersComponent", function(req, res) {
     res.render(model);
 });
 
-var friends = router.map ("/friends", "FriendsComponent", function(req, res) {
+router.map ("/friends", "FriendsComponent", function(req, res) {
     
     //if "friends" template uses actions, you must specify a component,
     //else, SuitUp will search in component registry to use a component
     
     var model = {
         request: req.param,
-        links: links
+        links: links,
+        friends: friends
     };
     res.render(model);
 });

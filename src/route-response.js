@@ -7,7 +7,7 @@ SuitUp.RouteResponse = function (componentClass) {
         console.log(model);
         var component = SuitUp.ComponentRegistry.createComponentByName(componentClass);
         component.setModel(model);
-        var componentHtml = '<div class="suitup-component" data-suitup-component="'+ component.getId() +'">' + component.render() + '</div>';
+        var componentHtml = component.render();
         
         var ctx2 = {
             model: model,

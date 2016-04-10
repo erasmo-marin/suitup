@@ -62,6 +62,13 @@ application.handlebars
 
 {{{partial "footer"}}}
 ```
+Update your model when inputs change.
+
+component.handlebars
+```html
+<textarea {{{modelVar "text"}}} value="{{{model.text}}}"> </textarea>
+<p>{{{model.text}}}</p>
+```
 
 ##Components inside other components
 In SuitUp, components are encapsulated reducing coupling. You can define a component inside another component in your template and access to the component instance. For example, if you have 2 components, IndexComponent and HeaderComponent, you can define the IndexComponent template, **index.handlebars** like this: 

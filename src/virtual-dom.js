@@ -4,12 +4,14 @@ var patch = require('virtual-dom/patch');
 var createElement = require('virtual-dom/create-element');
 var vdom = require('vdom-virtualize');
 var SuitUp = require("./suitup.js");
+var dcopy = require('deep-copy');
 
 SuitUp.VirtualDom = function(initialHtmlString) {
     
     var html = initialHtmlString;
     var tree = vdom.fromHTML(initialHtmlString);
     var rootNode = createElement(tree);
+    var lock = false;
     document.body.appendChild(rootNode);
     
     this.render = function (newHtml) {
@@ -31,7 +33,10 @@ SuitUp.VirtualDom = function(initialHtmlString) {
     }
     
     var getDomTreeCopy = function () {
-        return getTreeForHtml(html);
+        if (tree)
+            return dcopy(tree);
+        else
+            return getTreeForHtml(html);
     }
     
     var getHtmlForRootNode = function () {
@@ -43,6 +48,11 @@ SuitUp.VirtualDom = function(initialHtmlString) {
     
     //receive html from updated component and patch with changes
     this.updateComponent = function (html2) {
+        if(lock) {
+            console.log("log activo");
+            return;
+        }
+        lock = true;
         var node = getTreeForHtml(html2);
         node = node.children[1].children[0];
         var componentId = node.properties.attributes["data-suitup-component"];
@@ -52,7 +62,8 @@ SuitUp.VirtualDom = function(initialHtmlString) {
             var patches = diff(tree, patchTree);
             rootNode = patch(rootNode, patches);
             tree = patchTree;
-            html = getHtmlForRootNode();           
+            html = getHtmlForRootNode();
+            lock = false;
         });
     }
         
@@ -68,7 +79,8 @@ SuitUp.VirtualDom = function(initialHtmlString) {
                 parent.children[i].properties.attributes != null && 
                 parent.children[i].properties.attributes["data-suitup-component"] != null && 
                 parent.children[i].properties.attributes["data-suitup-component"] == componentNode.properties.attributes["data-suitup-component"]) {
-                parent.children[i] = componentNode;
+                parent.children[i] = {};
+                parent.children[i] = dcopy(componentNode);
                 callback();
                 return;
             }

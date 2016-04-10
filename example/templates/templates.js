@@ -19,33 +19,25 @@ templates['friend'] = template({"compiler":[7,">= 4.0.0"],"main":function(contai
     + container.escapeExpression(container.lambda(((stack1 = (depth0 != null ? depth0.model : depth0)) != null ? stack1.id : stack1), depth0))
     + "</p>";
 },"useData":true});
-templates['friends'] = template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-    var stack1, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3=container.lambda;
+templates['friends'] = template({"1":function(container,depth0,helpers,partials,data) {
+    var stack1, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing;
+
+  return "                <li>"
+    + ((stack1 = (helpers.link || (depth0 && depth0.link) || alias2).call(alias1,(helpers.concat || (depth0 && depth0.concat) || alias2).call(alias1,"/friend/",(depth0 != null ? depth0.id : depth0),{"name":"concat","hash":{},"data":data}),(depth0 != null ? depth0.name : depth0),(depth0 != null ? depth0.name : depth0),{"name":"link","hash":{},"data":data})) != null ? stack1 : "")
+    + "</li>\n";
+},"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
+    var stack1, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3=container.lambda, alias4=container.escapeExpression;
 
   return "\n<div class=\"friends-container\">\n    <p>In SuitUp you can create actions and make things move</p>\n    <div class=\"button col-30\" "
     + ((stack1 = (helpers.action || (depth0 && depth0.action) || alias2).call(alias1,"listFriends",{"name":"action","hash":{},"data":data})) != null ? stack1 : "")
-    + ">Toggle friends</div>\n    <div class=\"friends-list\" style=\"display:none\">\n        <ul>\n            <li>"
-    + ((stack1 = (helpers.link || (depth0 && depth0.link) || alias2).call(alias1,"/friend/1","Amaro Gomez","Friend 1",{"name":"link","hash":{},"data":data})) != null ? stack1 : "")
-    + "</li>\n            <li>"
-    + ((stack1 = (helpers.link || (depth0 && depth0.link) || alias2).call(alias1,"/friend/2","Nick Campbell","Friend 2",{"name":"link","hash":{},"data":data})) != null ? stack1 : "")
-    + "</li>\n            <li>"
-    + ((stack1 = (helpers.link || (depth0 && depth0.link) || alias2).call(alias1,"/friend/3","Jhonn Segura","Friend 3",{"name":"link","hash":{},"data":data})) != null ? stack1 : "")
-    + "</li>\n            <li>"
-    + ((stack1 = (helpers.link || (depth0 && depth0.link) || alias2).call(alias1,"/friend/4","Brad Pit","Friend 4",{"name":"link","hash":{},"data":data})) != null ? stack1 : "")
-    + "</li>\n            <li>"
-    + ((stack1 = (helpers.link || (depth0 && depth0.link) || alias2).call(alias1,"/friend/5","Angelina Jolie","Friend 5",{"name":"link","hash":{},"data":data})) != null ? stack1 : "")
-    + "</li>\n        </ul>\n    </div>\n</div>\n\n<div class=\"friends-container\">\n    <p>Inputs, buttons or divs respond to changes using the reactive helper. Try to write some html in this html editor.</p>\n    <textarea class=\"reactive-input col-40 left\" "
+    + ">Toggle friends</div>\n    <div class=\"friends-list\" style=\"display:none\">\n        <ul>\n"
+    + ((stack1 = helpers.each.call(alias1,((stack1 = (depth0 != null ? depth0.model : depth0)) != null ? stack1.friends : stack1),{"name":"each","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + "        </ul>\n    </div>\n</div>\n\n<div class=\"friends-container\">\n    <p>Inputs, buttons or divs respond to changes using the reactive helper. Try to write some html in this html editor.</p>\n    <textarea class=\"reactive-input col-40 left\" "
     + ((stack1 = (helpers.modelVar || (depth0 && depth0.modelVar) || alias2).call(alias1,"text",{"name":"modelVar","hash":{},"data":data})) != null ? stack1 : "")
-    + ">"
-    + ((stack1 = alias3(((stack1 = (depth0 != null ? depth0.model : depth0)) != null ? stack1.text : stack1), depth0)) != null ? stack1 : "")
-    + "</textarea>\n    <div class=\"reactive-output col-40 right\">"
-    + ((stack1 = alias3(((stack1 = (depth0 != null ? depth0.model : depth0)) != null ? stack1.text : stack1), depth0)) != null ? stack1 : "")
-    + "</div>\n</div>\n\n<div class=\"friends-container\">\n    <p>Apply filters to your data. Just specify a filter in reactive helper.</p>\n    <textarea class=\"reactive-input col-40 left\" "
-    + ((stack1 = (helpers.modelVar || (depth0 && depth0.modelVar) || alias2).call(alias1,"text2",{"name":"modelVar","hash":{},"data":data})) != null ? stack1 : "")
-    + ">"
-    + ((stack1 = alias3(((stack1 = (depth0 != null ? depth0.model : depth0)) != null ? stack1.text2 : stack1), depth0)) != null ? stack1 : "")
-    + "</textarea>\n    <div class=\"reactive-output col-40 right\">"
-    + ((stack1 = alias3(((stack1 = (depth0 != null ? depth0.model : depth0)) != null ? stack1.text2 : stack1), depth0)) != null ? stack1 : "")
+    + " value=\""
+    + alias4(alias3(((stack1 = (depth0 != null ? depth0.model : depth0)) != null ? stack1.text : stack1), depth0))
+    + "\"></textarea>\n    <div class=\"reactive-output col-40 right\">"
+    + alias4(alias3(((stack1 = (depth0 != null ? depth0.model : depth0)) != null ? stack1.text : stack1), depth0))
     + "</div>\n</div>";
 },"useData":true});
 templates['header'] = template({"1":function(container,depth0,helpers,partials,data) {
@@ -64,10 +56,7 @@ templates['header'] = template({"1":function(container,depth0,helpers,partials,d
     + "    </ul>\n    <div class=\"logo\"></div>\n</header>";
 },"useData":true});
 templates['index'] = template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-    var stack1;
-
-  return "<p>Context Index</p>\n\n"
-    + ((stack1 = (helpers.component || (depth0 && depth0.component) || helpers.helperMissing).call(depth0 != null ? depth0 : {},"FriendsComponent",(depth0 != null ? depth0.model : depth0),"friendsComponent",{"name":"component","hash":{},"data":data})) != null ? stack1 : "");
+    return "<p>Context Index</p>";
 },"useData":true});
 templates['users'] = template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     return "<p>Context Users</p>";
